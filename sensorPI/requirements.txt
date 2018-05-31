@@ -1,1 +1,7 @@
 schedule
+paho.mqtt.client
+json
+bs4.BeautifulSoup
+geopy
+pymongo
+requests
