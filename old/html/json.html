@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.getJSON demo</title>
+  <style>
+      body {
+        background-color: black;
+        color:green}
+
+      .title {
+        grid-area:title;
+        height:150px;
+        font-size:90px;
+      }
+      .icon {
+        grid-area:icon;
+        width:100px;
+        font-size:90px;
+      }
+      .content {
+        grid-area:content;
+        width:100%;
+      }
+
+      .container {
+        display:grid;
+        height:400px;
+        width:800px;
+        grig-gap:0px;
+        padding:0;
+        grid-template-areas:
+          'title title title title'
+          'icon content content content';
+      	}
+      .container > div { text-align: center;}
+
+
+  </style>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+
+<script>
+setInterval(function() {
+  var influx = "http://192.168.12.122:38086/query?db=climatic&q=SELECT+timevalue+FROM+json+ORDER+BY+DESC+LIMIT+1";
+  $.getJSON( influx, {
+    tags: "mount rainier",
+    tagmode: "any",
+    format: "json"
+  })
+
+    .done(function( data ) {
+      temp = data.results[0].series[0].values[0][1];
+      document.getElementById("title").innerHTML = temp;
+    })
+},
+1000);
+
+</script>
+
+
+<body>
+  <div class="container">
+       <div class="title" id="title" >
+
+       </div>
+       <div class="icon" >
+        <i class="fa fa-address-book"></i>
+       </div>
+
+
+        <div class="content">
+
+         </div>
+
+
+</body>
+</html>

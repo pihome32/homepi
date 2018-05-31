@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+ <head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://get.influxdb.org/influxdb-latest.js"/></script>
+</head>
+
+
+
+ <meta charset="utf-8">
+
+<body>
+
+<script>
+
+$(document).ready(function() {
+  var xhr = new XMLHttpRequest();
+  xhr.overrideMimeType("application/json");
+  xhr.open('GET', "http://192.168.12.122:38086/query?db=climatic&q=SELECT+time2+FROM+test", true);
+  xhr.send();
+  json = xhr.responseText;
+  document.getElementById("demo").innerHTML = JSON.parse(json);
+  xhr.onreadystatechange = processRequest;
+  console.log(json);
+  function processRequest(e) {
+   console.log(e);
+
+  }
+});
+
+</script>
+
+
+<p id="demo"></p>
+</body>
+</html>

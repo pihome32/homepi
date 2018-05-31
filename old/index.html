@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+		<script type="text/javascript">
+		function refresh()
+		{
+				var req = new XMLHttpRequest();
+				console.log("Grabbing Value");
+				req.onreadystatechange=function() {
+					if (req.readyState==4 && req.status==200) {
+						document.getElementById('trulyCodesFavouriteNumber').innerText = "dfadfas";
+					}
+				}
+				req.open("GET", 'reload.txt', true);
+				req.send(null);
+		}
+		function init()
+		{
+			refresh()
+			var int=self.setInterval(function(){refresh()},10000);
+		}
+		</script>
+	</head>
+<body onload="init()">
+	<div id="main">
+		<div id="updateMe">
+			<h2>Truly Code's Favourite Number is:</h2>
+			<h1 id="trulyCodesFavouriteNumber"></h1>
+		</div>
+	</div>
+</body>
+</html>
