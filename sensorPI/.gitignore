@@ -1,0 +1,24 @@
+# Python
+*.py[cod]
+*.py-e
+dist
+build
+
+# C extensions
+*.so
+
+# Translations
+*.mo
+
+# Packages
+*.egg
+*.egg-info
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Developper IDE
+.project
+.idea/*
