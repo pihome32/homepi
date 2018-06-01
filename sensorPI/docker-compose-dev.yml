@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+  influxdb:
+    container_name: influxdb
+    environment:
+      - INFLUXDB_DB=home
+    image: influxdb
+    restart: always
+    #volumes: ['/pirate/docker/influxdb:/var/lib/influxdb']
+    ports : ['8086:8086']
+
+  mqtt:
+    container_name: mqtt
+    image: eclipse-mosquitto
+    restart: always
+    ports : ['1883:1883']
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    ports : ['28017:28017','27017:27017']
+    environment:
+      - MONGO_INITDB_DATABASE=home
+
+  grafana:
+    container_name: grafana
+    image:  grafana/grafana
+    restart: always
+    #volumes: ['/pirate/docker/grafana:/var/lib/influxdb']
+    ports : ['3000:3000']

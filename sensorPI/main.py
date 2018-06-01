@@ -8,13 +8,13 @@ Options:
 """
 from __future__ import absolute_import
 from optparse import OptionParser, OptionGroup
-from src import *
+from src import mqtt
+from src import influxdb
 from web import *
 import time
 import schedule
 import configparser
-
-
+import threading
 
 
 
@@ -23,19 +23,10 @@ def every_minute():
 
 
 
-def scheduler():
-    schedule.every(1).minute.do(every_minute)
-    #schedule.every().hour.do(job)
-    #schedule.every().day.at("10:30").do(job)
-    #schedule.every(5).to(10).minutes.do(job)
-    #schedule.every().monday.do(job)
-    #schedule.every().wednesday.at("13:15").do(job)
-
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
-
-
+def mainloop():
+    print("main")
+    #test.mqttSend("dsfasdf",34323323)
+    #bme680.read()
 
 def main():
     """Main entry point for script."""
@@ -58,8 +49,30 @@ def main():
     if options.config:
         config = configparser.ConfigParser()
         config.read(options.config)
-        # secret_key = config['DEFAULT']['SECRET_KEY'] # 'secret-key-of-myapp'
-        # ci_hook_url = config['CI']['HOOK_URL'] # 'web-hooking-url-from-ci-service'
+        influxdb.init(config['INFLUXDB']['HOST'],config['INFLUXDB']['PORT'],config['INFLUXDB']['DB'])
+        influxdb.write("das")
+
+
+
+    schedule.every(5).seconds.do(every_minute)
+    #schedule.every().hour.do(job)
+    #schedule.every().day.at("10:30").do(job)
+    #schedule.every(5).to(10).minutes.do(job)
+    #schedule.every().monday.do(job)
+    #schedule.every().wednesday.at("13:15").do(job)
+    #mq= test.mqttListener ()
+
+
+
+
+    mqttThread = threading.Thread(target=mqtt.mqttListener, args=())
+    mqttThread.start()
+
+    while True:
+        schedule.run_pending()
+        mainloop()
+        time.sleep(1)
+
 
 
 if __name__ == "__main__":

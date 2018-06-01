@@ -7,3 +7,7 @@ pymongo
 requests
 configparser
 flask
+context
+influxdb
+threading
+pymongo
