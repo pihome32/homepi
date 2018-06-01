@@ -11,6 +11,10 @@ from optparse import OptionParser, OptionGroup
 from src import *
 import time
 import schedule
+import configparser
+
+
+
 
 
 def every_minute():
@@ -40,6 +44,7 @@ def main():
     group = OptionGroup(parser, "Specific Options", "Your application parameters")
     group.add_option("-v", "--view", help="Show this software version", action="store_true", dest="view", default=False)
     group.add_option("-n", "--name", dest="name", help="Set a name")
+    group.add_option("-c", "--config", dest="config", help="Config file")
     parser.add_option_group(group)
     (options, args) = parser.parse_args()
 
@@ -49,8 +54,11 @@ def main():
         return True
 
     # You're actions
-    if options.name:
-        app.set_name(options.name)
+    if options.config:
+        config = configparser.ConfigParser()
+        config.read(options.config)
+        # secret_key = config['DEFAULT']['SECRET_KEY'] # 'secret-key-of-myapp'
+        # ci_hook_url = config['CI']['HOOK_URL'] # 'web-hooking-url-from-ci-service'
 
 
 if __name__ == "__main__":
