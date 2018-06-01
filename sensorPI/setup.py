@@ -51,7 +51,7 @@ setup(
             'myapp = main:main',
         ],
     },
-    packages=['src'],
+    packages=['src','web'],
     include_package_data=True,
     platforms='any',
     zip_safe=False,

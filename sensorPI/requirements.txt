@@ -6,3 +6,4 @@ geopy
 pymongo
 requests
 configparser
+flask
