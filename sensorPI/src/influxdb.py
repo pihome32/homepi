@@ -63,26 +63,19 @@ def parse_args():
                         help='port of InfluxDB http API')
     return parser.parse_args()
 
-def write(data):
-    json_body = [
-        {
-            "measurement": "cpu_load_short",
-            "tags": {
-                "host": "server01",
-                "region": "us-west"
-            },
-            "fields": {
-                "Float_value": 0.64,
-                "Int_value": 3,
-                "String_value": "Text",
-                "Bool_value": True
-            }
-        }
-    ]
-    influxClient.write_points(json_body)
+def write(measur,data):
+    query = {}
+    query['measurement']=measur
+    query['fields']= data
+    query['tags']={'sensor':'dsaff'}
+    series = []
+    print(series)
+    series.append(query)
+
+    influxClient.write_points(series)
 
 def init(host,port,db):
     global influxClient
     influxClient = InfluxDBClient(host, port, '', '', db)
-    influxClient.create_retention_policy('One year', '300d', 3, default=True)
+    influxClient.create_retention_policy('one_year', '300d', 3, default=True)
 

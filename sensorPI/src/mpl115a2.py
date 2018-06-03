@@ -6,6 +6,8 @@
 
 import smbus
 import time
+from src import influxdb
+import json
 
 # Get I2C bus
 
@@ -52,9 +54,9 @@ def read():
 	# Convert the data
 	pressure = (65.0 / 1023.0) * presComp + 50
 	cTemp = (temp - 498) / (-5.35) + 25
-	fTemp = cTemp * 1.8 + 32
+	
+	pressure= pressure * 10
 
-	# Output data to screen
-	print ("Pressure : %.2f kPa" %pressure)
-	print ("Temperature in Celsius : %.2f C" %cTemp)
-	print ("Temperature in Fahrenheit : %.2f F" % fTemp)
+	data= { "Pressure": pressure,"Temperature": cTemp}
+	influxdb.write('mpl11a',data)
+

@@ -11,6 +11,7 @@ from optparse import OptionParser, OptionGroup
 from src import mqtt
 from src import influxdb
 from src import mpl115a2
+from src import bme680
 from web import *
 import time
 import schedule
@@ -22,10 +23,20 @@ import subprocess
 
 
 def every_minute():
-    print("I'm working...")
+	mpl115a2.read()
+
+	
+def every_10minutes():
+	bme680.read()
+
+    #print("I'm working...")
+
+def init():
+    mqttThread = threading.Thread(target=mqtt.mqttListener, args=())
+    mqttThread.start()
     mpl115a2.read()
-
-
+    bme680.read()
+    
 
 def mainloop():
     print("main")
@@ -40,7 +51,7 @@ def main():
     group = OptionGroup(parser, "Specific Options", "Your application parameters")
     group.add_option("-v", "--view", help="Show this software version", action="store_true", dest="view", default=False)
     group.add_option("-n", "--name", dest="name", help="Set a name")
-    group.add_option("-c", "--config", dest="config", help="Config file")
+    group.add_option("-c", "--configfile", dest="configfile", help="Config file")
     parser.add_option_group(group)
     (options, args) = parser.parse_args()
 
@@ -50,15 +61,16 @@ def main():
         return True
 
     # You're actions
-    if options.config:
+    if options.configfile:
         config = configparser.ConfigParser()
-        config.read(options.config)
+        config.read(options.configfile)
         influxdb.init(config['INFLUXDB']['HOST'],config['INFLUXDB']['PORT'],config['INFLUXDB']['DB'])
-        influxdb.write("das")
 
 
+    init()
 
-    schedule.every(5).seconds.do(every_minute)
+    schedule.every(60).seconds.do(every_minute)
+    schedule.every(600).seconds.do(every_10minutes)
     #schedule.every().hour.do(job)
     #schedule.every().day.at("10:30").do(job)
     #schedule.every(5).to(10).minutes.do(job)
@@ -69,8 +81,6 @@ def main():
 
 
 
-    mqttThread = threading.Thread(target=mqtt.mqttListener, args=())
-    mqttThread.start()
 
     while True:
         schedule.run_pending()

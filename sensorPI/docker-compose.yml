@@ -7,7 +7,7 @@ services:
       - INFLUXDB_DB=home
     image: hypriot/rpi-influxdb
     restart: always
-    #volumes: ['/pirate/docker/influxdb:/var/lib/influxdb']
+    volumes: ['/home/pirate/docker/influxdb:/var/lib/influxdb']
     ports : ['8086:8086']
 
   mqtt:
@@ -28,5 +28,5 @@ services:
     container_name: grafana
     image:  fg2it/grafana-armhf:v4.1.2
     restart: always
-    #volumes: ['/pirate/homepi/sensorPI/rafana:/var/lib/influxdb']
+    volumes: ['/home/pirate/homepi/sensorPI/docker/grafana/lib:/var/lib/grafana','/home/pirate/homepi/sensorPI/docker/grafana/etc:/etc/grafana']
     ports : ['3000:3000']

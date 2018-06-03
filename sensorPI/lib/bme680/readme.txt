@@ -1,0 +1,1 @@
+To compile : gcc bme_read. bme680.c -o bme680_read
