@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#import context  # Ensures paho is in PYTHONPATH
+from src import context  # Ensures paho is in PYTHONPATH
 import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
 

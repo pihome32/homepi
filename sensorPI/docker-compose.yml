@@ -28,5 +28,5 @@ services:
     container_name: grafana
     image:  fg2it/grafana-armhf:v4.1.2
     restart: always
-    #volumes: ['/pirate/docker/grafana:/var/lib/influxdb']
+    #volumes: ['/pirate/homepi/sensorPI/rafana:/var/lib/influxdb']
     ports : ['3000:3000']

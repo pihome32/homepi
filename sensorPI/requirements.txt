@@ -1,5 +1,5 @@
 schedule
-paho.mqtt.client
+paho-mqtt
 json
 bs4.BeautifulSoup
 geopy
@@ -11,3 +11,4 @@ context
 influxdb
 threading
 pymongo
+bme680

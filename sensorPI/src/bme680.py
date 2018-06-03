@@ -3,7 +3,7 @@
 import bme680
 import time
 
-sensor = bme680.BME680()
+sensor = bme680.bme680()
 
 # These calibration data can safely be commented
 # out, if desired.

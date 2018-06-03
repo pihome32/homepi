@@ -10,16 +10,20 @@ from __future__ import absolute_import
 from optparse import OptionParser, OptionGroup
 from src import mqtt
 from src import influxdb
+from src import mpl115a2
 from web import *
 import time
 import schedule
 import configparser
 import threading
+import subprocess
+
 
 
 
 def every_minute():
     print("I'm working...")
+    mpl115a2.read()
 
 
 
@@ -27,7 +31,7 @@ def mainloop():
     print("main")
     #test.mqttSend("dsfasdf",34323323)
     #bme680.read()
-
+	
 def main():
     """Main entry point for script."""
 
